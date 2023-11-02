@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vue</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <p>{{count}}</p>
+      <button @click="count++">증가</button>
+      <hr>
+
+      <input type="text" v-model="message">
+      <p>{{messagelength}}</p>
+    </div>
+    <script>
+      const { createApp, ref, watch } = Vue;
+      const app = createApp({
+        setup() {
+          const count = ref(0);
+          const message = ref('');
+          const messagelength = ref(0);
+          
+          const countWatch = watch(count, (newValue, oldValue)=>{
+            console.log(`new : ${newValue} / old: ${oldValue}`);
+          })
+
+          const messageWatch = watch(message, (newValue, oldValue)=>{
+            messagelength.value=newValue.length;
+          })
+          //watch는 반환하지 않ㄴ아도 쓸수있다.
+          return {
+            count,
+            message,
+            messagelength,
+          };
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>
